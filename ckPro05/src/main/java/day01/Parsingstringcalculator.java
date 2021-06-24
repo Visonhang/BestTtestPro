@@ -14,18 +14,8 @@ public class Parsingstringcalculator {
     public int calc(String str){
         int ans=0,i=0;
         char[] sc=str.trim().toCharArray();//生成一个char数组，包含string的所有字符
-        //弄栈
+        //栈
         Stack<Integer> st=new Stack();
-        /**
-         * 如果碰到空格则i++继续
-         * 碰到数字则对数字进行入栈
-         * 碰到‘+’‘-’‘*’‘/’：
-         * 加则直接入栈
-         * 减则num=-num入栈//注意：这里不能用num-=num!!!
-         * *则num=stack.pop()*num入栈
-         *'/'则num=stack.pop()/num入栈
-         *最后相加栈里面的数值则欧克
-         */
         while(i<sc.length)
         {
             if(sc[i]==' ') {//从开始起考虑的空格
