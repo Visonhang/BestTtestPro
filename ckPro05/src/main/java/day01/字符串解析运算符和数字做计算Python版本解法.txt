@@ -1,0 +1,40 @@
+传入一组字符串，解析运算符和数字做计算
+
+主要原理: '0' 在对应的ASCII码是48，48对应的十六进制数就是0x30; ‘8’转换为数字8=>“ 8+‘0’”。其中8就是数字
+         >'0' 表示在ASCII码中是数字字符，小于'0'表示在ASCII码中特殊符号和运算符号、字母; 利用列表(python)和栈(java)都是
+         为了保留上一次传入的字符数据，”+“ 则直接入栈和列表，后面走算总和即可，”-“先传负号，再入栈和列表，后面走算总和即可；
+         ”*“ ”/“则要传上一次传入数据，和这次数据想乘除即可，除法需要考虑绝对值，后面得出结果算总和即可。
+//https://www.jianshu.com/p/84e2b8d06f19
+class Solution:
+    def calculate(self, s: str) -> int:
+        d = 0
+        sign = '+'
+        res = [0]
+        for i in range(len(s)):
+            if s[i] >= '0':
+                d = d * 10 + int(s[i])
+            if s[i] < '0' and s[i] != ' ' or i == len(s) - 1:
+                if sign == '+':
+                    res.append(d)
+                if sign == '-':
+                    res.append(-1 * d)
+                if sign == '*':
+                    res.append((res.pop()*d))
+                if sign == '/':
+                    temp=res.pop()
+                    abs_val=abs(temp)//d
+                    end_val=abs_val*(-1)
+                    if temp<0:
+                        res.append(end_val)
+                    else:
+                        res.append(abs_val)
+                sign = s[i]
+                d = 0
+        return sum(res)
+
+
+if __name__ =='__main__':
+    s=input()
+    S=Solution()
+    #s='14-3/2'
+    print(S.calculate(s))
